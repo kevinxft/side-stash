@@ -6,7 +6,7 @@ Side Stash is a lightweight browser side‑panel collector. Right‑click any we
 
 ## Screenshot
 
-![Side Stash screenshot](./1.png)
+![Side Stash screenshot](./1.jpeg)
 
 ---
 
