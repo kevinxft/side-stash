@@ -44,6 +44,9 @@
   "countLabel": {
     "message": "件"
   },
+  "sourceLabel": {
+    "message": "出典"
+  },
   "filterAll": {
     "message": "すべて"
   },
@@ -68,14 +71,29 @@
   "clearSelection": {
     "message": "選択解除"
   },
-  "copyFiltered": {
-    "message": "絞り込み結果をコピー"
+  "copySelected": {
+    "message": "コピー"
+  },
+  "deleteSelected": {
+    "message": "削除"
   },
   "copySuccess": {
     "message": "$1件をコピーしました。"
   },
   "copyEmpty": {
     "message": "コピーする項目がありません。"
+  },
+  "copyNoneSelected": {
+    "message": "何も選択されていません。"
+  },
+  "deleteNoneSelected": {
+    "message": "何も選択されていません。"
+  },
+  "confirmDeleteMultiple": {
+    "message": "選択した$1件を削除しますか？"
+  },
+  "confirmSelectedCount": {
+    "message": "選択数：$1"
   },
   "copySingleSuccess": {
     "message": "コピーしました。"

@@ -2,3 +2,5 @@ node_modules/
 .output/
 .wxt/
 .DS_Store
+
+chrome-mv3/

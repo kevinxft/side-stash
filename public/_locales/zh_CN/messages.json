@@ -44,6 +44,9 @@
   "countLabel": {
     "message": "条"
   },
+  "sourceLabel": {
+    "message": "来源"
+  },
   "filterAll": {
     "message": "全部"
   },
@@ -68,14 +71,29 @@
   "clearSelection": {
     "message": "取消全选"
   },
-  "copyFiltered": {
-    "message": "复制筛选结果"
+  "copySelected": {
+    "message": "复制"
+  },
+  "deleteSelected": {
+    "message": "删除"
   },
   "copySuccess": {
     "message": "已复制 $1 条。"
   },
   "copyEmpty": {
     "message": "没有可复制的内容。"
+  },
+  "copyNoneSelected": {
+    "message": "未选择任何内容。"
+  },
+  "deleteNoneSelected": {
+    "message": "未选择任何内容。"
+  },
+  "confirmDeleteMultiple": {
+    "message": "确定删除 $1 条？"
+  },
+  "confirmSelectedCount": {
+    "message": "已选条目：$1"
   },
   "copySingleSuccess": {
     "message": "已复制。"

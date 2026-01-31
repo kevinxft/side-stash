@@ -15,8 +15,11 @@ const filterClear = document.getElementById('filter-clear') as HTMLButtonElement
 const filterButtons = Array.from(
   document.querySelectorAll<HTMLButtonElement>('[data-filter]')
 );
-const selectAllButton = document.getElementById('select-all') as HTMLButtonElement;
+const selectAllCheckbox = document.getElementById('select-all') as HTMLInputElement;
+const selectAllLabel = document.getElementById('select-all-label') as HTMLSpanElement;
+const selectAllCount = document.getElementById('select-all-count') as HTMLSpanElement;
 const copyFilteredButton = document.getElementById('copy-filtered') as HTMLButtonElement;
+const deleteSelectedButton = document.getElementById('delete-selected') as HTMLButtonElement;
 const copyStatus = document.getElementById('copy-status') as HTMLParagraphElement;
 
 type SavedItem = {
@@ -32,7 +35,7 @@ type SavedItem = {
 };
 
 let currentItems: SavedItem[] = [];
-let pendingDeleteId: string | null = null;
+let pendingDeleteIds: string[] = [];
 let activeFilter: SavedItem['type'] | 'all' = 'all';
 let queryText = '';
 const selectedIds = new Set<string>();
@@ -76,6 +79,17 @@ const t = (key: string, fallback: string, substitutions?: string | string[]) => 
   return raw || fallback;
 };
 
+const getHostname = (url?: string) => {
+  if (!url) {
+    return '';
+  }
+  try {
+    return new URL(url).hostname.toLowerCase();
+  } catch {
+    return '';
+  }
+};
+
 // Locales are handled by browser.i18n automatically.
 
 const getItems = async (): Promise<SavedItem[]> => {
@@ -97,11 +111,28 @@ const setText = (id: string, key: string, fallback: string) => {
   el.textContent = t(key, fallback);
 };
 
+function updateCopyButtonLabel() {
+  const count = selectedIds.size;
+  copyFilteredButton.textContent = t('copySelected', 'Copy');
+  deleteSelectedButton.textContent = t('deleteSelected', 'Delete');
+  const disabled = count === 0;
+  copyFilteredButton.disabled = disabled;
+  deleteSelectedButton.disabled = disabled;
+}
+
 const applyI18n = () => {
   setText('panel-title', 'panelTitle', 'Side Stash');
-  setText('panel-subtitle', 'panelSubtitle', 'Quickly stash text and links');
+  setText(
+    'panel-subtitle',
+    'panelSubtitle',
+    'Quickly stash text, links, and images'
+  );
   setText('empty-title', 'emptyTitle', 'Nothing saved yet');
-  setText('empty-hint', 'emptyHint', 'Right-click on a page to save text or links.');
+  setText(
+    'empty-hint',
+    'emptyHint',
+    'Right-click on a page to save text, links, or images.'
+  );
   setText('count-label', 'countLabel', 'items');
   setText('confirm-title', 'confirmTitle', 'Delete item');
   setText('confirm-message', 'confirmDelete', 'Delete this item?');
@@ -112,13 +143,8 @@ const applyI18n = () => {
   setText('filter-link', 'filterLink', 'Link');
   setText('filter-image', 'filterImage', 'Image');
   setText('filter-clear', 'filterClear', 'Clear');
-  setText('select-all', 'selectAll', 'Select all');
-  setText('copy-filtered', 'copyFiltered', 'Copy filtered');
-  setText('language-label', 'languageLabel', 'Language');
-  setText('language-auto', 'languageAuto', 'Auto');
-  setText('language-en', 'languageEnglish', 'English');
-  setText('language-zh', 'languageChinese', 'Chinese');
-  setText('language-ja', 'languageJapanese', 'Japanese');
+  selectAllLabel.textContent = t('selectAll', 'Select all');
+  updateCopyButtonLabel();
   filterInput.placeholder = t('filterPlaceholder', 'Filter by URL or keyword');
   document.title = t('panelTitle', document.title);
 };
@@ -131,7 +157,7 @@ const applyLanguage = async () => {
 };
 
 const openConfirm = (item: SavedItem) => {
-  pendingDeleteId = item.id;
+  pendingDeleteIds = [item.id];
   confirmItem.textContent = item.content;
   confirmMessage.textContent = t('confirmDelete', 'Delete this item?');
   confirmModal.hidden = false;
@@ -139,8 +165,22 @@ const openConfirm = (item: SavedItem) => {
 };
 
 const closeConfirm = () => {
-  pendingDeleteId = null;
+  pendingDeleteIds = [];
   confirmModal.hidden = true;
+};
+
+const openConfirmBulk = (items: SavedItem[]) => {
+  pendingDeleteIds = items.map((item) => item.id);
+  confirmItem.textContent = t('confirmSelectedCount', 'Selected items: $1', [
+    String(items.length),
+  ]);
+  confirmMessage.textContent = t(
+    'confirmDeleteMultiple',
+    'Delete $1 items?',
+    [String(items.length)]
+  );
+  confirmModal.hidden = false;
+  confirmOk.focus();
 };
 
 const getCopyValue = (item: SavedItem) => {
@@ -176,15 +216,25 @@ const getFilteredItems = (items: SavedItem[]) =>
 
 const updateSelectAllLabel = (filtered: SavedItem[]) => {
   if (!filtered.length) {
-    selectAllButton.textContent = t('selectAll', 'Select all');
-    selectAllButton.disabled = true;
+    selectAllLabel.textContent = t('selectAll', 'Select all');
+    selectAllCheckbox.disabled = true;
+    selectAllCheckbox.checked = false;
+    selectAllCheckbox.indeterminate = false;
+    selectAllCount.hidden = true;
     return;
   }
-  selectAllButton.disabled = false;
+  selectAllCheckbox.disabled = false;
   const allSelected = filtered.every((item) => selectedIds.has(item.id));
-  selectAllButton.textContent = allSelected
-    ? t('clearSelection', 'Clear selection')
-    : t('selectAll', 'Select all');
+  const someSelected = filtered.some((item) => selectedIds.has(item.id));
+  selectAllCheckbox.checked = allSelected;
+  selectAllCheckbox.indeterminate = !allSelected && someSelected;
+  selectAllLabel.textContent = t('selectAll', 'Select all');
+  if (selectedIds.size > 0) {
+    selectAllCount.textContent = `(${selectedIds.size})`;
+    selectAllCount.hidden = false;
+  } else {
+    selectAllCount.hidden = true;
+  }
 };
 
 const setCopyStatus = (message: string) => {
@@ -219,7 +269,7 @@ const copyTextToClipboard = async (text: string) => {
 
 const buildItemElement = (item: SavedItem) => {
   const li = document.createElement('li');
-  li.className = 'item';
+  li.className = selectedIds.has(item.id) ? 'item is-selected' : 'item';
 
   const header = document.createElement('div');
   header.className = 'item-header';
@@ -254,18 +304,22 @@ const buildItemElement = (item: SavedItem) => {
   actions.className = 'item-actions';
 
   const copyButton = document.createElement('button');
-  copyButton.className = 'button ghost';
+  copyButton.className = 'icon-button';
   copyButton.type = 'button';
-  copyButton.textContent = t('actionCopy', 'Copy');
   copyButton.dataset.action = 'copy';
   copyButton.dataset.id = item.id;
+  copyButton.setAttribute('aria-label', t('actionCopy', 'Copy'));
+  copyButton.innerHTML =
+    '<svg viewBox="0 0 24 24" aria-hidden="true"><path d="M16 1H6a2 2 0 0 0-2 2v12h2V3h10V1Zm3 4H10a2 2 0 0 0-2 2v14a2 2 0 0 0 2 2h9a2 2 0 0 0 2-2V7a2 2 0 0 0-2-2Zm0 16H10V7h9v14Z" fill="currentColor"/></svg>';
 
   const deleteButton = document.createElement('button');
-  deleteButton.className = 'button ghost';
+  deleteButton.className = 'icon-button danger';
   deleteButton.type = 'button';
-  deleteButton.textContent = t('actionDelete', 'Delete');
   deleteButton.dataset.action = 'delete';
   deleteButton.dataset.id = item.id;
+  deleteButton.setAttribute('aria-label', t('actionDelete', 'Delete'));
+  deleteButton.innerHTML =
+    '<svg viewBox="0 0 24 24" aria-hidden="true" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path stroke="none" d="M0 0h24v24H0z" fill="none"/><path d="M4 7l16 0" /><path d="M10 11l0 6" /><path d="M14 11l0 6" /><path d="M5 7l1 12a2 2 0 0 0 2 2h8a2 2 0 0 0 2 -2l1 -12" /><path d="M9 7v-3a1 1 0 0 1 1 -1h4a1 1 0 0 1 1 1v3" /></svg>';
 
   actions.append(copyButton, deleteButton);
   header.append(meta, actions);
@@ -286,32 +340,15 @@ const buildItemElement = (item: SavedItem) => {
   const source = document.createElement('div');
   source.className = 'source';
 
-  const pageInfo = document.createElement('span');
-  pageInfo.className = 'source-title';
-  pageInfo.textContent = item.pageTitle || item.pageUrl || '';
-  source.appendChild(pageInfo);
-
-  if (item.type === 'link' && item.linkUrl) {
-    const link = document.createElement('a');
-    link.href = item.linkUrl;
-    link.target = '_blank';
-    link.rel = 'noreferrer';
-    link.textContent = item.linkUrl;
-    source.appendChild(link);
-  } else if (item.type === 'image' && item.imageUrl) {
-    const link = document.createElement('a');
-    link.href = item.imageUrl;
-    link.target = '_blank';
-    link.rel = 'noreferrer';
-    link.textContent = item.imageUrl;
-    source.appendChild(link);
-  } else if (item.pageUrl) {
-    const link = document.createElement('a');
-    link.href = item.pageUrl;
-    link.target = '_blank';
-    link.rel = 'noreferrer';
-    link.textContent = item.pageUrl;
-    source.appendChild(link);
+  const sourceDomain =
+    getHostname(item.pageUrl) ||
+    getHostname(item.linkUrl) ||
+    getHostname(item.imageUrl);
+  if (sourceDomain) {
+    const line = document.createElement('span');
+    line.className = 'source-line';
+    line.textContent = `${t('sourceLabel', 'Source')}: ${sourceDomain}`;
+    source.appendChild(line);
   }
 
   li.append(header);
@@ -340,6 +377,7 @@ const render = (items: SavedItem[] | undefined) => {
     listEl.appendChild(buildItemElement(item));
   });
   updateSelectAllLabel(filtered);
+  updateCopyButtonLabel();
 };
 
 const loadItems = async () => {
@@ -384,27 +422,27 @@ filterClear.addEventListener('click', () => {
 // Manual language switching UI removed.
 
 
-selectAllButton.addEventListener('click', () => {
+selectAllCheckbox.addEventListener('change', () => {
   const filtered = getFilteredItems(currentItems);
   if (!filtered.length) {
     return;
   }
-  const allSelected = filtered.every((item) => selectedIds.has(item.id));
-  if (allSelected) {
-    filtered.forEach((item) => selectedIds.delete(item.id));
-  } else {
+  if (selectAllCheckbox.checked) {
     filtered.forEach((item) => selectedIds.add(item.id));
+  } else {
+    filtered.forEach((item) => selectedIds.delete(item.id));
   }
   render(currentItems);
+  updateCopyButtonLabel();
 });
 
 copyFilteredButton.addEventListener('click', async () => {
-  const filtered = getFilteredItems(currentItems);
-  if (!filtered.length) {
-    setCopyStatus(t('copyEmpty', 'No items to copy.'));
+  const selected = currentItems.filter((item) => selectedIds.has(item.id));
+  if (!selected.length) {
+    setCopyStatus(t('copyNoneSelected', 'No items selected.'));
     return;
   }
-  const lines = filtered
+  const lines = selected
     .map((item) => {
       if (item.type === 'link') {
         return item.linkUrl || item.content;
@@ -419,11 +457,20 @@ copyFilteredButton.addEventListener('click', async () => {
   const success = await copyTextToClipboard(text);
   if (success) {
     setCopyStatus(
-      t('copySuccess', `Copied ${filtered.length} items.`, [String(filtered.length)])
+      t('copySuccess', `Copied ${selected.length} items.`, [String(selected.length)])
     );
   } else {
     setCopyStatus(t('copyFailed', 'Copy failed.'));
   }
+});
+
+deleteSelectedButton.addEventListener('click', () => {
+  const selected = currentItems.filter((item) => selectedIds.has(item.id));
+  if (!selected.length) {
+    setCopyStatus(t('deleteNoneSelected', 'No items selected.'));
+    return;
+  }
+  openConfirmBulk(selected);
 });
 
 confirmCancel.addEventListener('click', () => {
@@ -431,12 +478,13 @@ confirmCancel.addEventListener('click', () => {
 });
 
 confirmOk.addEventListener('click', async () => {
-  if (!pendingDeleteId) {
+  if (!pendingDeleteIds.length) {
     closeConfirm();
     return;
   }
   const items = await getItems();
-  const nextItems = items.filter((entry) => entry.id !== pendingDeleteId);
+  const ids = new Set(pendingDeleteIds);
+  const nextItems = items.filter((entry) => !ids.has(entry.id));
   await saveItems(nextItems);
   closeConfirm();
 });
@@ -508,6 +556,8 @@ listEl.addEventListener('change', (event) => {
     selectedIds.delete(id);
   }
   updateSelectAllLabel(getFilteredItems(currentItems));
+  updateCopyButtonLabel();
+  render(currentItems);
 });
 
 const init = async () => {

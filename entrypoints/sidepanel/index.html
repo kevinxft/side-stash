@@ -45,8 +45,15 @@
         <button id="filter-clear" class="button ghost" type="button">Clear</button>
       </div>
       <div class="filter-actions">
-        <button id="select-all" class="button ghost" type="button">Select all</button>
-        <button id="copy-filtered" class="button primary" type="button">Copy filtered</button>
+        <label class="select-all">
+          <input id="select-all" type="checkbox" />
+          <span id="select-all-label">Select all</span>
+          <span id="select-all-count" class="select-all-count" hidden>(0)</span>
+        </label>
+        <div class="bulk-actions">
+          <button id="copy-filtered" class="button primary" type="button">Copy</button>
+          <button id="delete-selected" class="button danger" type="button">Delete</button>
+        </div>
       </div>
       <p id="copy-status" class="muted copy-status" role="status" aria-live="polite"></p>
     </section>

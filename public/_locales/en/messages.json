@@ -44,6 +44,9 @@
   "countLabel": {
     "message": "items"
   },
+  "sourceLabel": {
+    "message": "Source"
+  },
   "filterAll": {
     "message": "All"
   },
@@ -68,14 +71,29 @@
   "clearSelection": {
     "message": "Clear selection"
   },
-  "copyFiltered": {
-    "message": "Copy filtered"
+  "copySelected": {
+    "message": "Copy"
+  },
+  "deleteSelected": {
+    "message": "Delete"
   },
   "copySuccess": {
     "message": "Copied $1 items."
   },
   "copyEmpty": {
     "message": "No items to copy."
+  },
+  "copyNoneSelected": {
+    "message": "No items selected."
+  },
+  "deleteNoneSelected": {
+    "message": "No items selected."
+  },
+  "confirmDeleteMultiple": {
+    "message": "Delete $1 items?"
+  },
+  "confirmSelectedCount": {
+    "message": "Selected items: $1"
   },
   "copySingleSuccess": {
     "message": "Copied."
