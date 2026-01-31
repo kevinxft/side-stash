@@ -1,0 +1,31 @@
+<!doctype html>
+<html lang="zh-CN">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>Side Stash</title>
+    <link rel="stylesheet" href="sidepanel.css" />
+  </head>
+  <body>
+    <header class="panel-header">
+      <div>
+        <h1>Side Stash</h1>
+        <p>随手保存的文本与链接</p>
+      </div>
+      <div class="count">
+        <span id="count">0</span>
+        <span class="count-label">条</span>
+      </div>
+    </header>
+
+    <main>
+      <div id="empty" class="empty" hidden>
+        <p>还没有保存内容</p>
+        <p class="muted">在网页右键即可保存文本或链接。</p>
+      </div>
+      <ul id="list" class="item-list" aria-live="polite"></ul>
+    </main>
+
+    <script src="sidepanel.js"></script>
+  </body>
+</html>

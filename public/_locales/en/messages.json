@@ -1,0 +1,95 @@
+{
+  "extName": {
+    "message": "Side Stash"
+  },
+  "extDescription": {
+    "message": "Save selected text or links to a persistent side panel list."
+  },
+  "menuSaveText": {
+    "message": "Save text to side panel"
+  },
+  "menuSaveLink": {
+    "message": "Save link to side panel"
+  },
+  "menuSaveImage": {
+    "message": "Save image to side panel"
+  },
+  "actionDelete": {
+    "message": "Delete"
+  },
+  "actionCopy": {
+    "message": "Copy"
+  },
+  "confirmDelete": {
+    "message": "Delete this item?"
+  },
+  "confirmTitle": {
+    "message": "Delete item"
+  },
+  "confirmCancel": {
+    "message": "Cancel"
+  },
+  "panelTitle": {
+    "message": "Side Stash"
+  },
+  "panelSubtitle": {
+    "message": "Quickly stash text, links, and images"
+  },
+  "emptyTitle": {
+    "message": "Nothing saved yet"
+  },
+  "emptyHint": {
+    "message": "Right-click on a page to save text, links, or images."
+  },
+  "countLabel": {
+    "message": "items"
+  },
+  "filterAll": {
+    "message": "All"
+  },
+  "filterText": {
+    "message": "Text"
+  },
+  "filterLink": {
+    "message": "Link"
+  },
+  "filterImage": {
+    "message": "Image"
+  },
+  "filterPlaceholder": {
+    "message": "Filter by URL or keyword"
+  },
+  "filterClear": {
+    "message": "Clear"
+  },
+  "selectAll": {
+    "message": "Select all"
+  },
+  "clearSelection": {
+    "message": "Clear selection"
+  },
+  "copyFiltered": {
+    "message": "Copy filtered"
+  },
+  "copySuccess": {
+    "message": "Copied $1 items."
+  },
+  "copyEmpty": {
+    "message": "No items to copy."
+  },
+  "copySingleSuccess": {
+    "message": "Copied."
+  },
+  "copyFailed": {
+    "message": "Copy failed."
+  },
+  "badgeText": {
+    "message": "TEXT"
+  },
+  "badgeLink": {
+    "message": "LINK"
+  },
+  "badgeImage": {
+    "message": "IMAGE"
+  }
+}

@@ -1,0 +1,146 @@
+:root {
+  color-scheme: light;
+  --bg: #f7f4ef;
+  --panel: #ffffff;
+  --text: #1f1d1a;
+  --muted: #6f6b63;
+  --accent: #b25d3a;
+  --border: #e3ddd4;
+  --chip-text: #ffffff;
+}
+
+* {
+  box-sizing: border-box;
+}
+
+body {
+  margin: 0;
+  font-family: "Times New Roman", "Georgia", serif;
+  background: radial-gradient(circle at top left, #f1e7db, #f7f4ef 60%);
+  color: var(--text);
+  min-height: 100vh;
+}
+
+.panel-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: flex-start;
+  padding: 20px 18px 12px;
+  border-bottom: 1px solid var(--border);
+  background: var(--panel);
+  position: sticky;
+  top: 0;
+  z-index: 2;
+}
+
+.panel-header h1 {
+  margin: 0;
+  font-size: 20px;
+  letter-spacing: 0.5px;
+}
+
+.panel-header p {
+  margin: 6px 0 0;
+  color: var(--muted);
+  font-size: 13px;
+}
+
+.count {
+  display: flex;
+  align-items: baseline;
+  gap: 4px;
+  padding: 6px 10px;
+  border-radius: 999px;
+  background: var(--accent);
+  color: var(--chip-text);
+  font-weight: 600;
+}
+
+.count-label {
+  font-size: 12px;
+}
+
+main {
+  padding: 16px 14px 24px;
+}
+
+.empty {
+  padding: 30px 18px;
+  border: 1px dashed var(--border);
+  border-radius: 12px;
+  background: rgba(255, 255, 255, 0.7);
+  text-align: center;
+}
+
+.empty p {
+  margin: 0 0 6px;
+}
+
+.muted {
+  color: var(--muted);
+  font-size: 13px;
+}
+
+.item-list {
+  list-style: none;
+  margin: 0;
+  padding: 0;
+  display: grid;
+  gap: 12px;
+}
+
+.item {
+  background: var(--panel);
+  border-radius: 16px;
+  padding: 14px 14px 12px;
+  border: 1px solid var(--border);
+  box-shadow: 0 8px 18px rgba(66, 52, 40, 0.08);
+  display: grid;
+  gap: 8px;
+}
+
+.item-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  gap: 8px;
+}
+
+.badge {
+  font-size: 11px;
+  text-transform: uppercase;
+  letter-spacing: 0.8px;
+  background: var(--accent);
+  color: var(--chip-text);
+  padding: 4px 8px;
+  border-radius: 999px;
+}
+
+.time {
+  font-size: 12px;
+  color: var(--muted);
+}
+
+.content {
+  font-size: 15px;
+  line-height: 1.4;
+  word-break: break-word;
+}
+
+.source {
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+  font-size: 12px;
+  color: var(--muted);
+}
+
+.source a {
+  color: var(--accent);
+  text-decoration: none;
+  word-break: break-word;
+}
+
+.source a:hover {
+  text-decoration: underline;
+}

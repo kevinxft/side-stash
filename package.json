@@ -1,0 +1,22 @@
+{
+  "name": "side-stash",
+  "version": "0.1.0",
+  "description": "Save selected text or links to a persistent side panel list.",
+  "private": true,
+  "type": "module",
+  "scripts": {
+    "dev": "wxt",
+    "dev:firefox": "wxt -b firefox",
+    "build": "wxt build",
+    "build:firefox": "wxt build -b firefox",
+    "zip": "wxt zip",
+    "zip:firefox": "wxt zip -b firefox",
+    "postinstall": "wxt prepare"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "devDependencies": {
+    "wxt": "^0.20.13"
+  }
+}

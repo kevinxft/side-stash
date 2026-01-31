@@ -1,0 +1,95 @@
+{
+  "extName": {
+    "message": "Side Stash"
+  },
+  "extDescription": {
+    "message": "選択したテキストやリンクをサイドパネルに保存します。"
+  },
+  "menuSaveText": {
+    "message": "テキストをサイドパネルに保存"
+  },
+  "menuSaveLink": {
+    "message": "リンクをサイドパネルに保存"
+  },
+  "menuSaveImage": {
+    "message": "画像をサイドパネルに保存"
+  },
+  "actionDelete": {
+    "message": "削除"
+  },
+  "actionCopy": {
+    "message": "コピー"
+  },
+  "confirmDelete": {
+    "message": "この項目を削除しますか？"
+  },
+  "confirmTitle": {
+    "message": "項目を削除"
+  },
+  "confirmCancel": {
+    "message": "キャンセル"
+  },
+  "panelTitle": {
+    "message": "Side Stash"
+  },
+  "panelSubtitle": {
+    "message": "テキスト、リンク、画像をすばやく保存"
+  },
+  "emptyTitle": {
+    "message": "保存された項目はありません"
+  },
+  "emptyHint": {
+    "message": "ページで右クリックしてテキスト、リンク、画像を保存します。"
+  },
+  "countLabel": {
+    "message": "件"
+  },
+  "filterAll": {
+    "message": "すべて"
+  },
+  "filterText": {
+    "message": "テキスト"
+  },
+  "filterLink": {
+    "message": "リンク"
+  },
+  "filterImage": {
+    "message": "画像"
+  },
+  "filterPlaceholder": {
+    "message": "URL またはキーワードで絞り込み"
+  },
+  "filterClear": {
+    "message": "クリア"
+  },
+  "selectAll": {
+    "message": "すべて選択"
+  },
+  "clearSelection": {
+    "message": "選択解除"
+  },
+  "copyFiltered": {
+    "message": "絞り込み結果をコピー"
+  },
+  "copySuccess": {
+    "message": "$1件をコピーしました。"
+  },
+  "copyEmpty": {
+    "message": "コピーする項目がありません。"
+  },
+  "copySingleSuccess": {
+    "message": "コピーしました。"
+  },
+  "copyFailed": {
+    "message": "コピーに失敗しました。"
+  },
+  "badgeText": {
+    "message": "テキスト"
+  },
+  "badgeLink": {
+    "message": "リンク"
+  },
+  "badgeImage": {
+    "message": "画像"
+  }
+}

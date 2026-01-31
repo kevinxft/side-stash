@@ -1,0 +1,77 @@
+<!doctype html>
+<html lang="zh-CN">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>Side Stash</title>
+    <link rel="stylesheet" href="./style.css" />
+  </head>
+  <body>
+    <header class="panel-header">
+      <div class="brand">
+        <img class="brand-icon" src="/icon-48.png" alt="" />
+        <div class="brand-text">
+          <h1 id="panel-title">Side Stash</h1>
+          <p id="panel-subtitle">Quickly stash text and links</p>
+        </div>
+      </div>
+      <div class="count">
+        <span id="count">0</span>
+        <span id="count-label" class="count-label">items</span>
+      </div>
+    </header>
+
+    <section class="filters">
+      <div class="filter-group" role="group" aria-label="Filter by type">
+        <button id="filter-all" class="filter-button is-active" type="button" data-filter="all">
+          All
+        </button>
+        <button id="filter-text" class="filter-button" type="button" data-filter="text">
+          Text
+        </button>
+        <button id="filter-link" class="filter-button" type="button" data-filter="link">
+          Link
+        </button>
+        <button id="filter-image" class="filter-button" type="button" data-filter="image">
+          Image
+        </button>
+      </div>
+      <div class="filter-search">
+        <input
+          id="filter-input"
+          type="search"
+          placeholder="Filter by URL or keyword"
+          autocomplete="off" />
+        <button id="filter-clear" class="button ghost" type="button">Clear</button>
+      </div>
+      <div class="filter-actions">
+        <button id="select-all" class="button ghost" type="button">Select all</button>
+        <button id="copy-filtered" class="button primary" type="button">Copy filtered</button>
+      </div>
+      <p id="copy-status" class="muted copy-status" role="status" aria-live="polite"></p>
+    </section>
+
+    <main>
+      <div id="empty" class="empty" hidden>
+        <p id="empty-title">Nothing saved yet</p>
+        <p id="empty-hint" class="muted">Right-click on a page to save text or links.</p>
+      </div>
+      <ul id="list" class="item-list" aria-live="polite"></ul>
+    </main>
+
+    <div id="confirm-modal" class="modal" hidden>
+      <div class="modal-backdrop" data-close="true"></div>
+      <div class="modal-card" role="dialog" aria-modal="true" aria-labelledby="confirm-title">
+        <h2 id="confirm-title">Delete item</h2>
+        <p id="confirm-message" class="muted">Delete this item?</p>
+        <p id="confirm-item" class="confirm-item"></p>
+        <div class="form-actions">
+          <button id="confirm-cancel" class="button ghost" type="button">Cancel</button>
+          <button id="confirm-ok" class="button danger" type="button">Delete</button>
+        </div>
+      </div>
+    </div>
+
+    <script type="module" src="./main.ts"></script>
+  </body>
+</html>

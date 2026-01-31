@@ -1,0 +1,95 @@
+{
+  "extName": {
+    "message": "Side Stash"
+  },
+  "extDescription": {
+    "message": "保存选中文本或链接到侧边栏，支持持久化。"
+  },
+  "menuSaveText": {
+    "message": "保存文本到侧边栏"
+  },
+  "menuSaveLink": {
+    "message": "保存链接到侧边栏"
+  },
+  "menuSaveImage": {
+    "message": "保存图片到侧边栏"
+  },
+  "actionDelete": {
+    "message": "删除"
+  },
+  "actionCopy": {
+    "message": "复制"
+  },
+  "confirmDelete": {
+    "message": "确定删除该条目？"
+  },
+  "confirmTitle": {
+    "message": "删除条目"
+  },
+  "confirmCancel": {
+    "message": "取消"
+  },
+  "panelTitle": {
+    "message": "Side Stash"
+  },
+  "panelSubtitle": {
+    "message": "随手保存的文本、链接与图片"
+  },
+  "emptyTitle": {
+    "message": "还没有保存内容"
+  },
+  "emptyHint": {
+    "message": "在网页右键即可保存文本、链接或图片。"
+  },
+  "countLabel": {
+    "message": "条"
+  },
+  "filterAll": {
+    "message": "全部"
+  },
+  "filterText": {
+    "message": "文本"
+  },
+  "filterLink": {
+    "message": "链接"
+  },
+  "filterImage": {
+    "message": "图片"
+  },
+  "filterPlaceholder": {
+    "message": "按网址或关键词筛选"
+  },
+  "filterClear": {
+    "message": "清空"
+  },
+  "selectAll": {
+    "message": "全选"
+  },
+  "clearSelection": {
+    "message": "取消全选"
+  },
+  "copyFiltered": {
+    "message": "复制筛选结果"
+  },
+  "copySuccess": {
+    "message": "已复制 $1 条。"
+  },
+  "copyEmpty": {
+    "message": "没有可复制的内容。"
+  },
+  "copySingleSuccess": {
+    "message": "已复制。"
+  },
+  "copyFailed": {
+    "message": "复制失败。"
+  },
+  "badgeText": {
+    "message": "文本"
+  },
+  "badgeLink": {
+    "message": "链接"
+  },
+  "badgeImage": {
+    "message": "图片"
+  }
+}

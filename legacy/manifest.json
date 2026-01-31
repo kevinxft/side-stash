@@ -1,0 +1,24 @@
+{
+  "manifest_version": 3,
+  "name": "Side Stash",
+  "version": "0.1.0",
+  "description": "Save selected text or links to a persistent side panel list.",
+  "permissions": ["contextMenus", "storage", "sidePanel", "tabs"],
+  "host_permissions": ["<all_urls>"],
+  "background": {
+    "service_worker": "background.js"
+  },
+  "side_panel": {
+    "default_path": "sidepanel.html"
+  },
+  "content_scripts": [
+    {
+      "matches": ["<all_urls>"],
+      "js": ["contentScript.js"],
+      "run_at": "document_idle"
+    }
+  ],
+  "action": {
+    "default_title": "Side Stash"
+  }
+}
